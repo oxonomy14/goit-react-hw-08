@@ -11,7 +11,7 @@ const Footer = () => {
         <div className={s.footerWrapperItem}></div>
       </div>
       <div className={s.text}>
-        <p>Developer Andriy Semenenko - student of GoIt Ukraine - 08.05.2025</p>
+        <p>Developer Andrii Semenenko - student of GoIt Ukraine - 08.05.2025</p>
       </div>
     </footer>
   );
