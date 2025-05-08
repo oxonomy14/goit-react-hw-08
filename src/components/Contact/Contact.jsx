@@ -1,16 +1,48 @@
 import css from "./Contact.module.css";
 import { GrUserManager } from "react-icons/gr";
 import { MdOutlineContactPhone } from "react-icons/md";
+import { toast } from "react-hot-toast";
 
-import { useDispatch } from "react-redux";
-//import { deleteContact } from "../../redux/contactsSlice";
-import { deleteContact } from "../../redux/contactsOps";
+import { useDispatch, useSelector } from "react-redux";
+
+import { deleteContact } from "../../redux/contacts/operations";
+import {
+  selectSuccess,
+  selectIsEdit,
+  selectIsDelete,
+} from "../../redux/contacts/selectors";
+import {
+  setIsEdit,
+  setIsDelete,
+  setCurrentContact,
+  resetSuccess,
+} from "../../redux/contacts/slice";
+import DeleteForm from "../DeleteForm/DeleteForm";
+import EditForm from "../EditForm/EditForm";
 
 const Contact = ({ item }) => {
   const dispatch = useDispatch();
+  const success = useSelector(selectSuccess);
+  const isDelete = useSelector(selectIsDelete);
+  const isOpenEditForm = useSelector(selectIsEdit);
+
+  const handleEditForm = () => {
+    dispatch(setIsEdit(true));
+    dispatch(setCurrentContact(item));
+  };
+
+  const handleDeleteForm = () => {
+    dispatch(setIsDelete(true));
+    dispatch(setCurrentContact(item));
+  };
+
   const onDelete = () => {
     dispatch(deleteContact(item.id));
+    if (success) toast.success("Contact already success delete");
+    dispatch(resetSuccess(false));
+    dispatch(setIsDelete(false));
   };
+
   return (
     <>
       <li className={css.contactItem}>
@@ -25,14 +57,23 @@ const Contact = ({ item }) => {
             {item.number}
           </p>
         </div>
-        <div>
+        <div className={css.buttonBox}>
           <button
             type="button"
             className={css.buttonContactItem}
-            onClick={onDelete}
+            onClick={handleDeleteForm}
           >
             Delete
           </button>
+          <button
+            type="button"
+            className={css.buttonContactItem}
+            onClick={handleEditForm}
+          >
+            Edit
+          </button>
+          {isDelete && <DeleteForm onDelete={onDelete} />}
+          {isOpenEditForm && <EditForm />}
         </div>
       </li>
     </>

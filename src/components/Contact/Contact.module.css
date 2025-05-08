@@ -29,12 +29,19 @@
   display: flex;
 }
 
+.buttonBox {
+  display: flex;
+  gap: 6px;
+}
+
 .buttonContactItem {
   border: 1px solid #202020;
-  width: 150px;
-  height: 75px;
-  font-weight: 400;
-  font-size: 24px;
+  width: 55px;
+  height: 35px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 6px;
   transition: all 0.4s ease-in-out;
 }
 
