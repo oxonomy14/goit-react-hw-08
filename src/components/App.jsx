@@ -36,7 +36,15 @@ const App = () => {
       <Suspense fallback={<h2>Loading...</h2>}>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
+            <Route
+              index
+              element={
+                <RestrictedRoute
+                  component={<HomePage />}
+                  redirectTo="/contacts"
+                />
+              }
+            />
             <Route
               path="/register"
               element={
@@ -58,9 +66,10 @@ const App = () => {
             <Route
               path="contacts"
               element={
-                <PrivateRoute>
-                  <ContactsPage />
-                </PrivateRoute>
+                <PrivateRoute
+                  component={<ContactsPage />}
+                  redirectTo="/login"
+                />
               }
             />
           </Route>
