@@ -5,6 +5,7 @@ import {
   addContact,
   editContact,
 } from "./operations";
+import { logOut } from "../auth/operations";
 
 const initialState = {
   contacts: {
@@ -55,6 +56,7 @@ const slice = createSlice({
           (item) => item.id !== action.payload
         );
       })
+      .addCase(logOut.fulfilled, () => initialState)
       .addCase(addContact.fulfilled, (state, action) => {
         state.contacts.items.push(action.payload);
       })
